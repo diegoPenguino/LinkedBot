@@ -7,7 +7,29 @@ services:
       - "8511:8511"
     env_file:
       - .env
-    volumes:
-      - ./posts.db:/app/posts.db
     environment:
       - PYTHONUNBUFFERED=1
+      - DATABASE_URL=postgresql+asyncpg://diego:linkedpassword@db:5432/linkedbot
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15
+    container_name: linked_bot_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=diego
+      - POSTGRES_PASSWORD=linkedpassword
+      - POSTGRES_DB=linkedbot
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U diego -d linkedbot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+

@@ -8,8 +8,10 @@ env/
 .env
 
 # Database
-posts.db
-posts.db-journal
+data/
+*.db
+*.db-journal
+*.db-wal
 
 # IDEs
 .vscode/

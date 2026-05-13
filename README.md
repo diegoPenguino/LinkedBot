@@ -30,6 +30,22 @@ An AI-powered Telegram bot designed to help you capture your daily professional 
    pip install -r requirements.txt
    ```
 
+## 🐳 Docker Deployment
+
+If you prefer to use Docker:
+
+1. **Build and start the container**:
+   ```bash
+   docker-compose up -d --build
+   ```
+
+2. **Check logs**:
+   ```bash
+   docker-compose logs -f
+   ```
+
+The database will be persisted in your local directory as `posts.db`.
+
 ## ⚙️ Configuration
 
 Create a `.env` file in the root directory (you can use `.env.example` as a template):
@@ -51,7 +67,7 @@ Start the FastAPI server and the Telegram bot:
 python main.py
 ```
 
-The bot will start in long-polling mode, and the FastAPI server will be available at `http://localhost:8000`.
+The bot will start in long-polling mode, and the FastAPI server will be available at `http://localhost:8511`.
 
 ## 🤖 Bot Commands
 - `/start`: Initial welcome and help message.

@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    container_name: linked_bot
+    restart: unless-stopped
+    ports:
+      - "8511:8511"
+    env_file:
+      - .env
+    volumes:
+      - ./posts.db:/app/posts.db
+    environment:
+      - PYTHONUNBUFFERED=1

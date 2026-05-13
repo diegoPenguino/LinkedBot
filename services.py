@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
 async def extract_post_details(raw_text: str) -> dict:
     """
@@ -13,7 +14,7 @@ async def extract_post_details(raw_text: str) -> dict:
     Returns a dict with 'title' and 'summary'.
     """
     response = await client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=MODEL,
         messages=[
             {"role": "system", "content": "You are a helpful assistant that extracts a 'title' and 'summary' from text. The summary should be concise but capture the key details. Output strictly in JSON format with keys 'title' and 'summary'."},
             {"role": "user", "content": f"Extract title and summary from this text:\n\n{raw_text}"}
@@ -35,7 +36,7 @@ async def draft_linkedin_post(title: str, summary: str, raw_text: str) -> dict:
     personal_context = os.getenv("PERSONAL_CONTEXT", "")
     
     response = await client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=MODEL,
         messages=[
             {
                 "role": "system", 
